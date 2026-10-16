@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { budgets } from "@/lib/data";
+import { budgets, budgetIds } from "@/lib/data";
 
 export const runtime = "nodejs";
 
 const schema = z.object({
   name: z.string().trim().min(1).max(100),
   email: z.string().trim().email().max(200),
-  budget: z.enum(budgets as [string, ...string[]]),
+  budget: z.enum(budgetIds),
   message: z.string().trim().min(1).max(3000),
   website: z.string().max(0).optional(), // honeypot
 });
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
       to: [to],
       reply_to: email,
       subject: `Portfolio contact from ${name.replace(/[\r\n]/g, " ")}`,
-      html: `<p><b>${esc(name)}</b> (${esc(email)})</p><p>Budget: ${esc(budget)}</p><p>${esc(message).replace(/\n/g, "<br>")}</p>`,
+      html: `<p><b>${esc(name)}</b> (${esc(email)})</p><p>Budget: ${esc(budgets.find((b) => b.id === budget)?.label.en ?? budget)}</p><p>${esc(message).replace(/\n/g, "<br>")}</p>`,
     }),
   }).catch(() => null);
   if (!res || !res.ok) return err("Could not send message.", 502);

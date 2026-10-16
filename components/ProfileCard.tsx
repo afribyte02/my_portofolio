@@ -1,5 +1,6 @@
 import { Flame, Linkedin, Facebook, Instagram, Github } from "lucide-react";
 import { profile } from "@/lib/data";
+import { L } from "@/lib/i18n";
 import { Avatar } from "./Avatar";
 import { Reveal } from "./Reveal";
 
@@ -28,7 +29,7 @@ export function ProfileCard() {
             <path d="M66 0 C60 30 30 40 2 42" stroke="#f98a1d" strokeWidth="2" strokeDasharray="6 5" />
           </svg>
         </div>
-        <p className="mx-auto mt-3 max-w-[380px] text-[20px] font-semibold leading-[1.2] text-[#444] lg:mt-0 lg:max-w-[200px] lg:text-[12.5px] lg:leading-[1.15]">{profile.tagline}</p>
+        <p className="mx-auto mt-3 max-w-[380px] text-[20px] font-semibold leading-[1.2] text-[#444] lg:mt-0 lg:max-w-[200px] lg:text-[12.5px] lg:leading-[1.15]"><L v={profile.tagline} /></p>
         <div className="mt-6 flex justify-center gap-7 text-brand lg:mt-5 lg:gap-4">
           {profile.socials.map((s) => {
             const I = icons[s.icon];

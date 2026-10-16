@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Home, Folder, Briefcase, Wrench, PenSquare } from "lucide-react";
+import { useLang } from "@/lib/i18n";
 
 const items = [
   { id: "home", label: "Home", I: Home },
@@ -18,6 +19,7 @@ const items = [
  */
 export function TopNav() {
   const [active, setActive] = useState("home");
+  const { lang, setLang } = useLang();
 
   function go(id: string) {
     setActive(id);
@@ -45,6 +47,17 @@ export function TopNav() {
             </a>
           </li>
         ))}
+        <li className="ml-1 border-l border-white/10 pl-1">
+          <button
+            type="button"
+            onClick={() => setLang(lang === "fr" ? "en" : "fr")}
+            aria-label={lang === "fr" ? "Switch to English" : "Passer en français"}
+            title={lang === "fr" ? "English" : "Français"}
+            className="flex h-12 w-11 touch-manipulation items-center justify-center rounded-lg text-[12px] font-bold tracking-wide transition hover:text-brand active:scale-90 lg:h-10 lg:w-9 lg:text-[10px]"
+          >
+            {lang === "fr" ? "EN" : "FR"}
+          </button>
+        </li>
       </ul>
     </nav>
   );

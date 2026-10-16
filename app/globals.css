@@ -6,7 +6,7 @@
 html[data-from="projects"] #home,
 html[data-from="experience"] :is(#home, #projects),
 html[data-from="tools"] :is(#home, #projects, #experience),
-html[data-from="contact"] :is(#home, #projects, #experience, #tools, #blog) { display: none; }
+html[data-from="contact"] :is(#home, #projects, #experience, #tools, #featured) { display: none; }
 /* On mobile the profile card sits above the sections, so it goes too (on desktop it stays in its column). */
 @media (max-width: 1023px) {
   html[data-from]:not([data-from="home"]) aside { display: none; }
