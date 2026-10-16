@@ -18,7 +18,7 @@ export default function Page() {
       <main className="mx-auto grid max-w-[775px] gap-10 px-5 pb-24 pt-24 lg:grid-cols-[234px_1fr] lg:gap-[68px] lg:px-0 lg:pt-[110px]">
         <ProfileCard />
 
-        <div className="min-w-0 space-y-28">
+        <div className="flex min-w-0 flex-col gap-28">
           <section id="home">
             <Reveal as="h2" className="text-[56px] font-extrabold uppercase leading-[0.95] tracking-tight sm:text-[72px]">
               <span className="block text-white">{profile.title[0]}</span>

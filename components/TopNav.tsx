@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Home, Folder, Briefcase, Wrench, PenSquare } from "lucide-react";
 
 const items = [
@@ -10,82 +10,42 @@ const items = [
   { id: "contact", label: "Contact", I: PenSquare },
 ];
 
-const OFFSET = 90; // space kept above the section title (under the nav bar)
-
 /**
- * Icons jump to a section and make it the "floor": the page can scroll down
- * but not back up past that section until another icon is clicked.
- * Clicking "Home" resets the floor to the very top.
+ * Each icon "opens" a section like a separate page: the sections before it are removed from the layout
+ * (see html[data-from] rules in globals.css), so the page simply starts there. Scrolling up at the top
+ * is then the browser's normal overscroll/refresh, and the section above can never be pulled into view.
+ * The bar scrolls away with the page on Home and pins to the screen top once a section is opened.
  */
 export function TopNav() {
-  const active = useRef<string | null>(null);
-
-  // Current floor in scrollY units, measured live so it survives resizes/zoom.
-  const floor = () => {
-    if (!active.current || active.current === "home") return 0;
-    const el = document.getElementById(active.current);
-    return el ? Math.max(0, el.getBoundingClientRect().top + window.scrollY - OFFSET) : 0;
-  };
-
-  useEffect(() => {
-    const clamp = () => {
-      const f = floor();
-      if (window.scrollY < f - 1) window.scrollTo({ top: f, behavior: "instant" });
-    };
-    const onWheel = (e: WheelEvent) => {
-      if (e.deltaY < 0 && window.scrollY <= floor() + 1) e.preventDefault();
-    };
-    let lastY = 0;
-    const onTouchStart = (e: TouchEvent) => { lastY = e.touches[0].clientY; };
-    const onTouchMove = (e: TouchEvent) => {
-      const y = e.touches[0].clientY;
-      if (y > lastY && window.scrollY <= floor() + 1) e.preventDefault(); // finger down = scroll up
-      lastY = y;
-    };
-    window.addEventListener("scroll", clamp, { passive: true });
-    window.addEventListener("resize", clamp);
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    return () => {
-      window.removeEventListener("scroll", clamp);
-      window.removeEventListener("resize", clamp);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, []);
-
-  // At the very top (Home) the bar scrolls away with the page; after an icon jump it pins to the screen top.
-  const [pinned, setPinned] = useState(false);
+  const [active, setActive] = useState("home");
 
   function go(id: string) {
-    active.current = id;
-    setPinned(id !== "home");
-    window.scrollTo({ top: floor(), behavior: "instant" });
+    setActive(id);
+    document.documentElement.dataset.from = id;
+    window.scrollTo({ top: 0, behavior: "instant" });
   }
 
   return (
-    <>
-    {/* Once pinned, mask anything above the section start (e.g. the previous section showing under the browser bar). */}
-    {pinned && <div aria-hidden className="pointer-events-none fixed inset-x-0 -top-[300px] z-40 h-[330px] bg-bg" />}
-    <nav aria-label="Primary" className={`${pinned ? "fixed" : "absolute"} left-1/2 top-5 z-50 -translate-x-1/2 rounded-xl bg-[#1c1b1b]/90 px-6 py-3.5 backdrop-blur lg:px-5 lg:py-3`}>
-      <ul className="flex items-center gap-7 text-white/80 lg:gap-6">
+    <nav
+      aria-label="Primary"
+      className={`${active === "home" ? "absolute" : "fixed"} left-1/2 top-5 z-50 -translate-x-1/2 rounded-xl bg-[#1c1b1b]/95 px-2 py-1 backdrop-blur lg:px-1.5 lg:py-0.5`}
+    >
+      <ul className="flex items-center text-white/80">
         {items.map(({ id, label, I }) => (
           <li key={id}>
             <a
               href={`#${id}`}
               aria-label={label}
+              aria-current={active === id ? "page" : undefined}
               title={label}
               onClick={(e) => { e.preventDefault(); go(id); }}
-              className="block transition hover:text-brand"
+              className={`flex h-12 w-12 touch-manipulation items-center justify-center rounded-lg transition hover:text-brand active:scale-90 lg:h-10 lg:w-10 ${active === id ? "text-brand" : ""}`}
             >
-              <I size={18} />
+              <I className="h-5 w-5 lg:h-[15px] lg:w-[15px]" />
             </a>
           </li>
         ))}
       </ul>
     </nav>
-    </>
   );
 }

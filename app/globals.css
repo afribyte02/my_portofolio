@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-section[id] { scroll-margin-top: 90px; }
+/* Section "pages": opening a section removes the ones before it (set by TopNav via html[data-from]). */
+html[data-from="projects"] #home,
+html[data-from="experience"] :is(#home, #projects),
+html[data-from="tools"] :is(#home, #projects, #experience),
+html[data-from="contact"] :is(#home, #projects, #experience, #tools, #blog) { display: none; }
+/* On mobile the profile card sits above the sections, so it goes too (on desktop it stays in its column). */
+@media (max-width: 1023px) {
+  html[data-from]:not([data-from="home"]) aside { display: none; }
+}
 
 /* Scroll reveal (see components/Reveal.tsx). The fallback animation guarantees content shows even if JS never runs. */
 .reveal {
