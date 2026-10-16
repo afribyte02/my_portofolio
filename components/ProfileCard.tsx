@@ -1,6 +1,7 @@
 import { Flame, Linkedin, Facebook, Instagram, Github } from "lucide-react";
 import { profile } from "@/lib/data";
 import { Avatar } from "./Avatar";
+import { Reveal } from "./Reveal";
 
 const icons = { linkedin: Linkedin, facebook: Facebook, instagram: Instagram, github: Github };
 
@@ -8,7 +9,7 @@ const icons = { linkedin: Linkedin, facebook: Facebook, instagram: Instagram, gi
 export function ProfileCard() {
   return (
     <aside className="lg:sticky lg:top-[90px] lg:self-start">
-      <div className="relative mx-auto w-full overflow-hidden rounded-[14px] bg-white px-5 pb-7 pt-5 text-center text-black lg:w-[234px] lg:rounded-[10px] lg:px-0 lg:pb-5">
+      <Reveal className="relative mx-auto w-full overflow-hidden rounded-[14px] bg-white px-5 pb-7 pt-5 text-center text-black lg:w-[234px] lg:rounded-[10px] lg:px-0 lg:pb-5">
         <svg className="pointer-events-none absolute -left-[12px] -top-[10px] h-[70px] w-[130px] lg:h-[70px]" viewBox="0 0 130 70" fill="none" aria-hidden>
           <path d="M0 8 C40 40 100 40 128 -4" stroke="#f98a1d" strokeWidth="2" strokeDasharray="6 5" />
         </svg>
@@ -38,7 +39,7 @@ export function ProfileCard() {
             );
           })}
         </div>
-      </div>
+      </Reveal>
     </aside>
   );
 }
