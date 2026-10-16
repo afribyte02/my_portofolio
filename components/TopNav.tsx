@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Home, Folder, Briefcase, Wrench, PenSquare } from "lucide-react";
 
 const items = [
@@ -56,13 +56,17 @@ export function TopNav() {
     };
   }, []);
 
+  // At the very top (Home) the bar scrolls away with the page; after an icon jump it pins to the screen top.
+  const [pinned, setPinned] = useState(false);
+
   function go(id: string) {
     active.current = id;
+    setPinned(id !== "home");
     window.scrollTo({ top: floor(), behavior: "instant" });
   }
 
   return (
-    <nav aria-label="Primary" className="absolute left-1/2 top-5 z-50 -translate-x-1/2 rounded-xl bg-[#1c1b1b]/90 px-6 py-3.5 backdrop-blur lg:px-5 lg:py-3">
+    <nav aria-label="Primary" className={`${pinned ? "fixed" : "absolute"} left-1/2 top-5 z-50 -translate-x-1/2 rounded-xl bg-[#1c1b1b]/90 px-6 py-3.5 backdrop-blur lg:px-5 lg:py-3`}>
       <ul className="flex items-center gap-7 text-white/80 lg:gap-6">
         {items.map(({ id, label, I }) => (
           <li key={id}>
