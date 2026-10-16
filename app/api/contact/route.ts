@@ -40,6 +40,7 @@ export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
   if (limited(ip)) return err("Too many requests. Try again later.", 429);
 
+  if (Number(req.headers.get("content-length") ?? 0) > 10_000) return err("Payload too large", 413);
   const raw = await req.text();
   if (raw.length > 10_000) return err("Payload too large", 413);
   let json: unknown;
@@ -59,6 +60,7 @@ export async function POST(req: Request) {
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
+    signal: AbortSignal.timeout(8000),
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
       from: process.env.CONTACT_FROM_EMAIL ?? "Portfolio <onboarding@resend.dev>",
@@ -67,7 +69,7 @@ export async function POST(req: Request) {
       subject: `Portfolio contact from ${name.replace(/[\r\n]/g, " ")}`,
       html: `<p><b>${esc(name)}</b> (${esc(email)})</p><p>Budget: ${esc(budget)}</p><p>${esc(message).replace(/\n/g, "<br>")}</p>`,
     }),
-  });
-  if (!res.ok) return err("Could not send message.", 502);
+  }).catch(() => null);
+  if (!res || !res.ok) return err("Could not send message.", 502);
   return NextResponse.json({ ok: true });
 }
