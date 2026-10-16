@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+section[id] { scroll-margin-top: 90px; }
+body { background: #131212; color: #fff; }
+::selection { background: #f26b38; color: #fff; }
