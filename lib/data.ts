@@ -5,10 +5,10 @@ const bi = (fr: string, en: string): Bi => ({ fr, en });
 export const site = {
   url: "https://my-portofolio-pink-five.vercel.app",
   // Public-facing name used for SEO / share previews.
-  seoName: "Chris Mangala",
-  seoTitle: "Chris Mangala | Full-Stack Developer & Software Engineer",
+  seoName: "Hydriss Tshwala Mangala",
+  seoTitle: "Hydriss Tshwala Mangala | Full-Stack Developer & Software Engineer",
   seoDescription:
-    "Découvrez le portfolio de Chris Mangala, développeur full-stack spécialisé dans les applications web et mobiles, les plateformes numériques et les solutions innovantes.",
+    "Découvrez le portfolio de Hydriss Tshwala Mangala, développeur full-stack spécialisé dans les applications web et mobiles, les plateformes numériques et les solutions innovantes.",
 };
 
 export const contact = {
@@ -27,8 +27,8 @@ export const profile = {
   title: ["FULL-STACK", "DEVELOPER"],
   subtitle: "Software Engineer",
   bio: bi(
-    "Développeur full-stack avec 4 à 5 ans d'expérience, je conçois et développe des applications web et mobiles ainsi que des plateformes numériques. J'accompagne les projets de la conception au déploiement en privilégiant la performance, l'expérience utilisateur et des solutions adaptées aux besoins réels.",
-    "Full-stack developer with 4 to 5 years of experience, I design and build web and mobile applications and digital platforms. I support projects from design to deployment, focusing on performance, user experience and solutions tailored to real needs.",
+    "Développeur full-stack avec 5 ans d'expérience, je conçois et développe des applications web et mobiles ainsi que des plateformes numériques. J'accompagne les projets de la conception au déploiement en privilégiant la performance, l'expérience utilisateur et des solutions adaptées aux besoins réels.",
+    "Full-stack developer with 5 years of experience, I design and build web and mobile applications and digital platforms. I support projects from design to deployment, focusing on performance, user experience and solutions tailored to real needs.",
   ),
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/chris-mangala-325260325/", icon: "linkedin" },
@@ -39,7 +39,7 @@ export const profile = {
 } as const;
 
 export const stats = [
-  { value: "+6", label: bi("ANS D'EXPÉRIENCE", "YEARS OF EXPERIENCE") },
+  { value: "+5", label: bi("ANS D'EXPÉRIENCE", "YEARS OF EXPERIENCE") },
   { value: "+25", label: bi("PROJETS RÉALISÉS", "PROJECTS COMPLETED") },
   { value: "+20", label: bi("CLIENTS DANS LE MONDE", "WORLDWIDE CLIENTS") },
 ];
