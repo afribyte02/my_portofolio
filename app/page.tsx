@@ -1,4 +1,4 @@
-import { ArrowUpRight, ArrowRight, Layers, LayoutTemplate, Mail, MessageCircle, Download } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Layers, LayoutTemplate, Mail, MessageCircle } from "lucide-react";
 import { profile, stats, skills, projects, experience, tools, featured, contact } from "@/lib/data";
 import { ProfileCard } from "@/components/ProfileCard";
 import { TopNav } from "@/components/TopNav";
@@ -6,6 +6,7 @@ import { Heading } from "@/components/Heading";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
+import { CvButton } from "@/components/CvButton";
 import { L } from "@/lib/i18n";
 import { ui } from "@/lib/ui";
 
@@ -141,9 +142,7 @@ export default function Page() {
             <Reveal delay={100} className="mt-8 flex flex-wrap gap-2.5">
               <a href={`mailto:${contact.email}`} className={pill}><Mail size={14} />{contact.email}</a>
               <a href={`https://wa.me/${contact.whatsapp.replace(/\D/g, "")}`} {...ext} className={pill}><MessageCircle size={14} />WhatsApp {contact.whatsapp}</a>
-              {contact.cvUrl && (
-                <a href={contact.cvUrl} download className={`${pill} !bg-brand !text-white hover:brightness-110`}><Download size={14} /><L v={ui.contact.cv} /></a>
-              )}
+              <CvButton className={`${pill} !bg-brand !text-white hover:brightness-110`} />
             </Reveal>
             <Reveal delay={160}>
               <ContactForm />

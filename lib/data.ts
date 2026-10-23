@@ -14,8 +14,8 @@ export const site = {
 export const contact = {
   email: "hydrissmangala@gmail.com",
   whatsapp: "+905338438529",
-  // Put the PDF in /public (e.g. public/cv.pdf) and set this to "/cv.pdf" to show the "Download My CV" button.
-  cvUrl: "",
+  // PDFs live in /public. Set a language to "" to hide the CV button for that language.
+  cvUrl: { fr: "/cv-fr.pdf", en: "/cv-en.pdf" },
 };
 
 export const profile = {
